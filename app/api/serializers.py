@@ -1,31 +1,44 @@
 from rest_framework import serializers
 
-from app.models import Movie
+from app.models import WatchList, StreamingPlatform
 
 
-class MovieSerializer(serializers.ModelSerializer):
-    length_name = serializers.SerializerMethodField()
+class StreamingPlatformSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StreamingPlatform
+        fields = "__all__"
+
+
+class WatchListSerializer(serializers.ModelSerializer):
+    # length_name = serializers.SerializerMethodField()
 
     class Meta:
-        model = Movie
+        model = WatchList
         fields = "__all__"
-        # fields = ['id', 'name', 'description']
-        # exclude = ['name']
 
-    def get_length_name(self, object):
-        return len(object.name)
-
-    def validate_name(self, value):
-        if len(value) < 2:
-            raise serializers.ValidationError('Name can not be less than 2')
-        else:
-            return value
-
-    def validate(self, data):
-        if data['name'] == data['description']:
-            raise serializers.ValidationError('Name and Description can not same')
-        else:
-            return data
+# class MovieSerializer(serializers.ModelSerializer):
+#     length_name = serializers.SerializerMethodField()
+#
+#     class Meta:
+#         model = Movie
+#         fields = "__all__"
+#         # fields = ['id', 'name', 'description']
+#         # exclude = ['name']
+#
+#     def get_length_name(self, object):
+#         return len(object.name)
+#
+#     def validate_name(self, value):
+#         if len(value) < 2:
+#             raise serializers.ValidationError('Name can not be less than 2')
+#         else:
+#             return value
+#
+#     def validate(self, data):
+#         if data['name'] == data['description']:
+#             raise serializers.ValidationError('Name and Description can not same')
+#         else:
+#             return data
 
 # def length_name(value):
 #     if len(value) < 2:
