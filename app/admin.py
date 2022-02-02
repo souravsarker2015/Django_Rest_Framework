@@ -11,6 +11,10 @@ class StreamingPlatformAdmin(admin.ModelAdmin):
 class WatchListAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'story_line', 'active', 'created']
 
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ['id', 'watchlist', 'rating', 'description', 'active', 'created', 'updated']
 # @admin.register(Movie)
 # class MovieAdmin(admin.ModelAdmin):
 #     list_display = ['id', 'name', 'description', 'active']

@@ -1,11 +1,17 @@
 from rest_framework import serializers
+from app.models import WatchList, StreamingPlatform, Review
 
-from app.models import WatchList, StreamingPlatform
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = "__all__"
 
 
 class WatchListSerializer(serializers.ModelSerializer):
-    # length_name = serializers.SerializerMethodField()
+    reviews = ReviewSerializer(many=True, read_only=True)
 
+    # length_name = serializers.SerializerMethodField()
     class Meta:
         model = WatchList
         fields = "__all__"
@@ -13,6 +19,7 @@ class WatchListSerializer(serializers.ModelSerializer):
 
 class StreamingPlatformSerializer(serializers.ModelSerializer):
     watchlist = WatchListSerializer(many=True, read_only=True)
+
     # watchlist = serializers.StringRelatedField(many=True)
     # watchlist = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     # watchlist = serializers.HyperlinkedRelatedField(
@@ -24,7 +31,7 @@ class StreamingPlatformSerializer(serializers.ModelSerializer):
     class Meta:
         model = StreamingPlatform
         fields = "__all__"
-
+        # fields=["url",'name']
 # class MovieSerializer(serializers.ModelSerializer):
 #     length_name = serializers.SerializerMethodField()
 #
