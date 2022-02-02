@@ -9,7 +9,7 @@ from app.api.serializers import *
 class StreamPlatformListsAV(APIView):
     def get(self, request):
         stream_platforms = StreamingPlatform.objects.all()
-        serializer = StreamingPlatformSerializer(stream_platforms,many=True)
+        serializer = StreamingPlatformSerializer(stream_platforms, many=True)
         return Response(serializer.data)
 
     def post(self, request):
@@ -32,7 +32,7 @@ class StreamPlatFormDetailsAV(APIView):
 
     def put(self, request, pk):
         stream_platform = StreamingPlatform.objects.get(id=pk)
-        serializer = StreamingPlatformSerializer(stream_platform,data=request.data)
+        serializer = StreamingPlatformSerializer(stream_platform, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
