@@ -6,12 +6,19 @@ class StreamingPlatform(models.Model):
     about = models.CharField(max_length=250)
     website_link = models.URLField(max_length=150)
 
+    def __str__(self):
+        return self.name
+
 
 class WatchList(models.Model):
     title = models.CharField(max_length=150)
     story_line = models.CharField(max_length=150)
+    platform = models.ForeignKey(StreamingPlatform, on_delete=models.CASCADE, related_name='watchlist')  # related name is important
     active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
 
 # class Movie(models.Model):
 #     name = models.CharField(max_length=200)

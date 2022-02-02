@@ -6,7 +6,7 @@ from app.models import *
 from app.api.serializers import *
 
 
-class StreamPlatformLists(APIView):
+class StreamPlatformListsAV(APIView):
     def get(self, request):
         stream_platforms = StreamingPlatform.objects.all()
         serializer = StreamingPlatformSerializer(stream_platforms,many=True)
@@ -21,7 +21,7 @@ class StreamPlatformLists(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class StreamPlatFormDetails(APIView):
+class StreamPlatFormDetailsAV(APIView):
     def get(self, request, pk):
         try:
             stream_platform = StreamingPlatform.objects.get(id=pk)
