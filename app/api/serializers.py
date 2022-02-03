@@ -23,17 +23,17 @@ class WatchListSerializer(serializers.ModelSerializer):
 class StreamingPlatformSerializer(serializers.ModelSerializer):
     watchlist = WatchListSerializer(many=True, read_only=True)
 
-    # watchlist = serializers.StringRelatedField(many=True)
-    # watchlist = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-    # watchlist = serializers.HyperlinkedRelatedField(
-    #     many=True,
-    #     read_only=True,
-    #     view_name='details'
-    # )
-
     class Meta:
         model = StreamingPlatform
         fields = "__all__"
+        # watchlist = serializers.StringRelatedField(many=True)
+        # watchlist = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+        # watchlist = serializers.HyperlinkedRelatedField(
+        #     many=True,
+        #     read_only=True,
+        #     view_name='details'
+        # )
+
         # fields=["url",'name']
 # class MovieSerializer(serializers.ModelSerializer):
 #     length_name = serializers.SerializerMethodField()

@@ -1,9 +1,11 @@
 from rest_framework import status, mixins, generics
 # from rest_framework.decorators import api_view
 from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 # from app.models import *
+from app.api.permission import AdminOrReadOnly, ReviewUserOrReadOnly
 from app.api.serializers import *
 
 
@@ -21,12 +23,21 @@ class ReviewCreate(generics.CreateAPIView):
 
         if review_queryset.exists():
             raise ValidationError("Tou have already reviewed")
-        serializer.save(watchlist=watchlist,review_user=review_user)
+
+        if watchlist.num_rating == 0:
+            watchlist.avg_rating = serializer.validated_data['rating']
+
+        else:
+            watchlist.avg_rating = (watchlist.avg_rating + serializer.validated_data['rating']) / 2
+        watchlist.num_rating = watchlist.num_rating + 1
+        watchlist.save()
+        serializer.save(watchlist=watchlist, review_user=review_user)
 
 
 class ReviewList(generics.ListAPIView):
     # queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         pk = self.kwargs['pk']
@@ -36,6 +47,7 @@ class ReviewList(generics.ListAPIView):
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    permission_classes = [ReviewUserOrReadOnly]
 
 
 class StreamPlatformListsAV(APIView):
