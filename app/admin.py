@@ -14,7 +14,7 @@ class WatchListAdmin(admin.ModelAdmin):
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ['id', 'watchlist', 'rating', 'description', 'active', 'created', 'updated']
+    list_display = ['id', 'review_user', 'watchlist', 'rating', 'description', 'active', 'created', 'updated']
 # @admin.register(Movie)
 # class MovieAdmin(admin.ModelAdmin):
 #     list_display = ['id', 'name', 'description', 'active']
