@@ -106,7 +106,7 @@ class StreamPlatformListsAV(APIView):
         serializer = StreamingPlatformSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -120,7 +120,7 @@ class StreamPlatFormDetailsAV(APIView):
         except StreamingPlatform.DoesNotExist:
             return Response(status=status.HTTP_204_NO_CONTENT)
         serializer = StreamingPlatformSerializer(stream_platform)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, pk):
         stream_platform = StreamingPlatform.objects.get(id=pk)
